@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:neighbourly/UserScreens/addIssue.dart';
+import 'UserScreens/feed.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -17,6 +18,23 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  Widget navigateTo(){
+    switch(_currentIndex){
+      case 0:{
+        return Feed();
+      }
+      break;
+      case 1:{
+        return AddIssue();
+      }
+      default:{
+        return Text('What!!!!!');
+      }
+      break;
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -28,12 +46,9 @@ class _DashboardState extends State<Dashboard> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home_rounded),label: 'Feed'),
             BottomNavigationBarItem(icon: Icon(Icons.post_add_sharp),label: 'File an Issue'),
-            BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile'),
           ],
         ),
-        body: Center(
-          child: Text('Hello There'),
-        ),
+        body: navigateTo(),
       ),
     );
   }

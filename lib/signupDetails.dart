@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class SignupDetails extends StatefulWidget {
   @override
@@ -38,7 +38,7 @@ class _SignupDetailsState extends State<SignupDetails> {
               alignment: Alignment.centerLeft,
               height: 90,
               child: TextFormField(
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))],
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9.@]'))],
                 controller: emailController,
                 validator: (val){
                   if(EmailValidator.validate(val)){
@@ -123,16 +123,24 @@ class _SignupDetailsState extends State<SignupDetails> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: ()async{
-                  // if(_formKey.currentState.validate()){
-                  //   String username = usernameController.text;
-                  //   String password = passwordController.text;
-                  //   print(password);
-                  //   print('Successful');
-                  //   SharedPreferences preferences=await SharedPreferences.getInstance();
-                  //   preferences.setString('username', username);
-                  //   Navigator.pushReplacementNamed(context,'/create');
-                  // }
-                  Navigator;
+                  if(_formKey.currentState.validate()){
+
+                    print('Successful');
+                    String encodedPassword=Uri.encodeComponent(passwordController.text);
+
+                    try{
+                      var response= await http.get(
+                        Uri.parse('https://neighbourly12.herokuapp.com/signup?email=${emailController.text}&password=$encodedPassword'),
+                      );
+                      print(response.body);
+                      if(response.statusCode==200){
+                        Navigator.pushReplacementNamed(context, '/loginDetails');
+                      }
+                    }
+                    catch(e){
+                      print('The Exception is'+e);
+                    }
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   onPrimary: Color(0xFFB40284A),
