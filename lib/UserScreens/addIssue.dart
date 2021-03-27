@@ -100,18 +100,19 @@ class _AddIssueState extends State<AddIssue> {
                         Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                         var lat=position.latitude;
                         var lon=position.longitude;
-                        // print(lat);
-                        // print(lon);
-
                         var response =await http.get(
                             Uri.parse(
-                            'https://neighbourly12.herokuapp.com/newpost?email=$e&title=$t&description=$d&flair=$f&lat=$lat&lon=$lon'));
-                        print(response.body);
+                            'https://neighbourly12.herokuapp.com/newpost?email=$e&title=$t&desc=$d&flair=$f&lat=$lat&long=$lon'));
+                        if(response.statusCode==200){
+                          Navigator.pushReplacementNamed(context, '/dashboard');
+                        }
+                        else{
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Could not post')));
+                        }
                       }
                       catch(e){
                         print(e);
                       }
-                      Navigator.pushReplacementNamed(context, '/dashboard');
                     },
                     style: ElevatedButton.styleFrom(
                       onPrimary: Color(0xFFB40284A),
@@ -120,8 +121,6 @@ class _AddIssueState extends State<AddIssue> {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    // padding: EdgeInsets.all(15.0),
-                    // color: Color(0xFFB40284A),
                     child: Text(
                       'ADD',
                       style: TextStyle(
