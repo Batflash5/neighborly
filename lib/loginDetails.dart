@@ -11,22 +11,24 @@ class LoginDetails extends StatefulWidget {
 }
 
 class _LoginDetailsState extends State<LoginDetails> {
-
-  double height=0;
-  double width=0;
+  double height = 0;
+  double width = 0;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    height=MediaQuery.of(context).size.height;
-    width=MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
 
-    return Form(
+    return MaterialApp(
+        home: Scaffold(
+            body: Form(
       key: _formKey,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: width/30,vertical: height/10),
+        margin:
+            EdgeInsets.symmetric(horizontal: width / 30, vertical: height / 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,10 +40,12 @@ class _LoginDetailsState extends State<LoginDetails> {
               alignment: Alignment.centerLeft,
               height: 90,
               child: TextFormField(
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9.@]'))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9.@]'))
+                ],
                 controller: emailController,
-                validator: (val){
-                  if(val.isEmpty){
+                validator: (val) {
+                  if (val.isEmpty) {
                     return 'E-mail should not be empty';
                   }
                   return null;
@@ -54,15 +58,11 @@ class _LoginDetailsState extends State<LoginDetails> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                        color: Colors.grey
-                    ),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                        color: Colors.grey
-                    ),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
@@ -80,9 +80,11 @@ class _LoginDetailsState extends State<LoginDetails> {
               height: 60.0,
               child: TextFormField(
                 controller: passwordController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@]'))],
-                validator: (val){
-                  if(val.length>=8){
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@]'))
+                ],
+                validator: (val) {
+                  if (val.length >= 8) {
                     return null;
                   }
                   return 'Invalid Password';
@@ -95,15 +97,11 @@ class _LoginDetailsState extends State<LoginDetails> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                        color: Colors.grey
-                    ),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                        color: Colors.grey
-                    ),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   contentPadding: EdgeInsets.only(top: 14.0),
                   prefixIcon: Icon(
@@ -116,35 +114,37 @@ class _LoginDetailsState extends State<LoginDetails> {
               ),
             ),
             SizedBox(
-              height: height/20,
+              height: height / 20,
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 25.0),
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: ()async{
-                  if(_formKey.currentState.validate()){
-
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
                     print('Successful');
-                    String encodedPassword=Uri.encodeComponent(passwordController.text);
+                    String encodedPassword =
+                        Uri.encodeComponent(passwordController.text);
 
-                    try{
-                      var response= await http.get(
-                        Uri.parse('https://neighbourly12.herokuapp.com/login?email=${emailController.text}&password=$encodedPassword'),
+                    try {
+                      var response = await http.get(
+                        Uri.parse(
+                            'https://neighbourly12.herokuapp.com/login?email=${emailController.text}&password=$encodedPassword'),
                       );
                       print(response.body);
-                      if(response.body!="No user found"){
-                        SharedPreferences preferences=await SharedPreferences.getInstance();
+                      if (response.body != "No user found") {
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
                         preferences.setString('email', emailController.text);
-                        preferences.setString('password', passwordController.text);
+                        preferences.setString(
+                            'password', passwordController.text);
                         Navigator.pushReplacementNamed(context, '/dashboard');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Invalid Credentials')));
                       }
-                      else{
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Credentials')));
-                      }
-                    }
-                    catch(e){
-                      print('The Exception is'+e);
+                    } catch (e) {
+                      print('The Exception is' + e);
                     }
                   }
                 },
@@ -172,6 +172,6 @@ class _LoginDetailsState extends State<LoginDetails> {
           ],
         ),
       ),
-    );
+    )));
   }
 }
