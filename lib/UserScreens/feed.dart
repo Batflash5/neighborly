@@ -54,7 +54,8 @@ class _ViewPostsState extends State<ViewPosts> {
             value['flair'],
             value['lat'],
             value['long'],
-            value['title']
+            value['title'],
+            value['status']
           ]);
         });
       });
@@ -75,7 +76,7 @@ class _ViewPostsState extends State<ViewPosts> {
               itemCount: a.length,
               itemBuilder: (context, index) {
                 return Card(
-                  color: Colors.deepOrange,
+                  color: Colors.deepPurple,
                   elevation: 5,
                   child: Column(children: [
                     ListTile(
@@ -101,6 +102,16 @@ class _ViewPostsState extends State<ViewPosts> {
                           style: GoogleFonts.kanit(
                               textStyle: TextStyle(
                                   color: Colors.white, fontSize: 20))),
+                    ),
+                    Card(
+                      color: Colors.green,
+                      elevation: 5,
+                      child: ListTile(
+                        title: Text('Status: ${a[index][7]}',
+                            style: GoogleFonts.kanit(
+                                textStyle: TextStyle(
+                                    color: Colors.white, fontSize: 20))),
+                      ),
                     ),
                   ]),
                 );

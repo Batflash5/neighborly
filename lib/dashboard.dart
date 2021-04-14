@@ -4,6 +4,7 @@ import 'UserScreens/feed.dart';
 import "UserScreens/curloc.dart";
 import 'getStarted.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'UserScreens/myposts.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -34,6 +35,10 @@ class _DashboardState extends State<Dashboard> {
         {
           return AddIssue();
         }
+      case 3:
+        {
+          return Myposts();
+        }
       default:
         {
           return Text('What!!!!!');
@@ -55,7 +60,11 @@ class _DashboardState extends State<Dashboard> {
           title: Text('Neighbourly'),
           actions: [
             RaisedButton(
-              child: Text('Logout'),
+              color: Colors.orange,
+              child: Text(
+                'Logout',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 logout();
                 Navigator.push(
@@ -71,11 +80,21 @@ class _DashboardState extends State<Dashboard> {
           onTap: onTabTapped,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.map_outlined), label: 'Home'),
+                icon: Icon(Icons.map_outlined),
+                label: 'Home',
+                backgroundColor: Colors.orange),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded), label: 'Feed'),
+                icon: Icon(Icons.home_rounded),
+                label: 'Feed',
+                backgroundColor: Colors.orange),
             BottomNavigationBarItem(
-                icon: Icon(Icons.post_add_sharp), label: 'File an Issue'),
+                icon: Icon(Icons.post_add_sharp),
+                label: 'File an Issue',
+                backgroundColor: Colors.orange),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.my_library_books),
+                label: 'My posts',
+                backgroundColor: Colors.orange),
           ],
         ),
         body: navigateTo(),
