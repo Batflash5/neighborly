@@ -1,7 +1,9 @@
 # neighborly
 
-A Flutter application which lets users meet the neighbours and get involved in social activities and 
-events and Find out about local issues and influence those around them.
+A Flutter application which lets users meet the neighbours and get involved in social activities and events.
+
+Find out about local issues and influence those around them.
+
 For the Backend code (API which connects app to firebase) refer to the repo https://github.com/Batflash5/Neighbourly
 
 ## Description
