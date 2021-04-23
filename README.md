@@ -1,4 +1,4 @@
-# Neighbourly
+# neighborly
 
 A Flutter application which lets users meet the neighbours and get involved in social activities and 
 events and Find out about local issues and influence those around them.
