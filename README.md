@@ -24,7 +24,7 @@ For retrieving and updating the data, we make a call to an API deployed using He
 
 ## Authors
 
-Hari Prasath M   @Batflash5
-Rahul S          @rahulsavage12
+Hari Prasath M   https://github.com/Batflash5
+Rahul S          https://github.com/rahulsavage12
 
 
